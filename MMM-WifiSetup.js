@@ -70,6 +70,8 @@ Module.register("MMM-WifiSetup", {
         if (notification === "WIFI_SCAN_RESULT") {
             var iframe = document.querySelector("iframe");
             if (iframe) {
+                console.log("Payload recieved")
+                console.dir(payload)
                 iframe.contentWindow.postMessage({ type: "wifiNetworks", data: payload }, "*");
             }
         }

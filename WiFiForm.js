@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("message", (event) => {
         if (event.data.type === "wifiNetworks") {
             const networks = event.data.data;
+            console.dir(networks);
             const ssidSelect = document.getElementById('ssid');
             networks.forEach(network => {
                 if (network.hasOwnProperty('ssid')) {
