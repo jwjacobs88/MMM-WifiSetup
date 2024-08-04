@@ -51,16 +51,19 @@ module.exports = NodeHelper.create({
             if (err) return callback(err);
             callback(null);
         });
-	console.log("Moving the file in place...")
+	    console.log("Moving the file in place...")
         require('child_process').exec('sudo mv /tmp/wpa_supplicant.conf /boot/wpa_supplicant.conf', console.log)  
         require('child_process').exec('sudo reboot', console.log)  
     },
 
     scanWifiNetworks: function() {
+        console.log("Scanning for networks.");
         wifi.scan((error, networks) => {
             if (error) {
+                console.log(error);
                 this.sendSocketNotification("WIFI_SCAN_RESULT", { error });
             } else {
+                console.log(networks);
                 this.sendSocketNotification("WIFI_SCAN_RESULT", networks);
             }
         });
