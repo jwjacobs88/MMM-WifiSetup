@@ -1,0 +1,67 @@
+Module.register("MMM-WifiSetup", {
+    defaults: {
+        // Default module configurations
+    },
+
+    getScripts: function() {
+        return [this.file("dist/WiFiForm.bundle.js")];
+    },
+
+    getStyles: function() {
+        return [this.file("MMM-WifiSetup.css"), "font-awesome.css"];
+    },
+
+    start: function() {
+        Log.info("Starting module: " + this.name);
+        this.addEventListeners();
+    },
+
+    getDom: function() {
+        var wrapper = document.createElement("div");
+        wrapper.id = "wifi-setup-wrapper";
+
+        // Create a button to show the form
+        var showFormButton = document.createElement("button");
+        showFormButton.innerHTML = '<i class="fas fa-wifi"></i>';
+        showFormButton.id = "show-form-button";
+        showFormButton.addEventListener("click", function() {
+            document.getElementById("wifi-form-container").style.display = "flex";
+            this.style.display = "none";
+        });
+        wrapper.appendChild(showFormButton);
+
+        // Create a container for the form
+        var formContainer = document.createElement("div");
+        formContainer.id = "wifi-form-container";
+        formContainer.style.display = "none"; // Initially hide the form
+        formContainer.style.position = "fixed";
+        formContainer.style.top = "0";
+        formContainer.style.left = "0";
+        formContainer.style.width = "100%";
+        formContainer.style.height = "100%";
+        formContainer.style.backgroundColor = "rgba(0, 0, 0, 0.8)"; // Semi-transparent background
+        formContainer.style.justifyContent = "center";
+        formContainer.style.alignItems = "center";
+
+        // Create an iframe to load the form
+        var iframe = document.createElement("iframe");
+        iframe.src = "modules/MMM-WifiSetup/WiFiForm.html";
+        iframe.style.width = "90%";
+        iframe.style.height = "90%"; // Increase height to accommodate the keyboard and form
+        iframe.style.border = "none";
+        formContainer.appendChild(iframe);
+
+        document.body.appendChild(formContainer);
+
+        return wrapper;
+    },
+
+    addEventListeners: function() {
+        window.addEventListener("message", (event) => {
+            if (event.data === "closeForm") {
+                document.getElementById("wifi-form-container").style.display = "none";
+                document.getElementById("show-form-button").style.display = "block";
+            }
+        });
+    }
+});

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wi-Fi Setup</title>
+    <link rel="stylesheet" href="node_modules/simple-keyboard/build/css/index.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            margin: 0;
+            background-color: #ffffff; /* Set body background color */
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 100%; /* Make form full width */
+            background-color: #ffffff; /* Set form background color */
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add some shadow for better visibility */
+            border-radius: 10px; /* Rounded corners */
+            overflow: auto; /* Ensure form is scrollable */
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 1em;
+        }
+        .simple-keyboard {
+            width: 100%; /* Make keyboard full width */
+            margin-top: 20px;
+        }
+        #close-button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #f44336; /* Red background */
+            color: white; /* White text */
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+        }
+    </style>
+</head>
+<body>
+    <form id="wifi-form">
+        <label for="ssid">Wi-Fi SSID:</label>
+        <input type="text" id="ssid" name="ssid" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <div>
+            <input type="checkbox" id="show-password" name="show-password">
+            <label for="show-password">Show Password</label>
+        </div>
+
+        <button type="submit">Connect</button>
+    </form>
+
+    <button id="close-button">Close</button>
+
+    <div id="keyboard" class="simple-keyboard"></div>
+
+    <script src="dist/WiFiForm.bundle.js"></script>
+</body>
+</html>
+
