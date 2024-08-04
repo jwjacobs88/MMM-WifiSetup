@@ -1,18 +1,13 @@
 const NodeHelper = require("node_helper");
 const bodyParser = require("body-parser");
 const fs = require('fs');
-const wifi = require('node-wifi');
+const wifi = require('wpa_supplicant');
 
 module.exports = NodeHelper.create({
     start: function() {
         console.log("Starting node_helper for module: " + this.name);
         this.expressApp.use(bodyParser.json());
         this.setupRoutes();
-
-        // Init wifi module
-        wifi.init({
-            iface: null
-        });
     },
 
     setupRoutes: function() {
@@ -58,15 +53,14 @@ module.exports = NodeHelper.create({
 
     scanWifiNetworks: function() {
         console.log("Scanning for networks.");
-        wifi.scan((error, networks) => {
-            if (error) {
-                console.log(error);
-                this.sendSocketNotification("WIFI_SCAN_RESULT", { error });
-            } else {
-                console.log(networks);
-                this.sendSocketNotification("WIFI_SCAN_RESULT", networks);
-            }
+        var wifi = wpa();
+
+        wifi.on('ready', function () {
+            wifi.scan()
         });
+        var networks = wifi.networks;
+        console.log(networks);
+        this.sendSocketNotification("WIFI_SCAN_RESULT", networks);
     },
 
     socketNotificationReceived: function(notification, payload) {

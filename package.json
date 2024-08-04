@@ -12,8 +12,8 @@
     "babel-loader": "^9.1.3",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "node-wifi": "^2.0.16",
-    "simple-keyboard": "^3.7.99"
+    "simple-keyboard": "^3.7.99",
+    "wpa_supplicant": "^1.0.2"
   },
   "devDependencies": {
     "webpack-cli": "^5.1.4"
