@@ -1,12 +1,18 @@
 const NodeHelper = require("node_helper");
 const bodyParser = require("body-parser");
 const fs = require('fs');
+const wifi = require('node-wifi');
 
 module.exports = NodeHelper.create({
     start: function() {
         console.log("Starting node_helper for module: " + this.name);
         this.expressApp.use(bodyParser.json());
         this.setupRoutes();
+
+        // Init wifi module
+        wifi.init({
+            iface: null
+        });
     },
 
     setupRoutes: function() {
@@ -31,15 +37,15 @@ module.exports = NodeHelper.create({
 
     configureWifi: function(ssid, password, callback) {
         const wpaSupplicantConf = `
-country=US
-ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-update_config=1
+            country=US
+            ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+            update_config=1
 
-network={
-    ssid="${ssid}"
-    psk="${password}"
-}
-`;
+            network={
+                ssid="${ssid}"
+                psk="${password}"
+            }
+        `;
 
         fs.writeFile('/tmp/wpa_supplicant.conf', wpaSupplicantConf, (err) => {
             if (err) return callback(err);
@@ -50,9 +56,21 @@ network={
         require('child_process').exec('sudo reboot', console.log)  
     },
 
+    scanWifiNetworks: function() {
+        wifi.scan((error, networks) => {
+            if (error) {
+                this.sendSocketNotification("WIFI_SCAN_RESULT", { error });
+            } else {
+                this.sendSocketNotification("WIFI_SCAN_RESULT", networks);
+            }
+        });
+    },
+
     socketNotificationReceived: function(notification, payload) {
         if (notification === "START_WIFI_SETUP") {
             // Handle socket notifications from the frontend if needed
+        } else if (notification === "SCAN_WIFI") {
+            this.scanWifiNetworks();
         }
     }
 });

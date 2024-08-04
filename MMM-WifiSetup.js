@@ -14,6 +14,7 @@ Module.register("MMM-WifiSetup", {
     start: function() {
         Log.info("Starting module: " + this.name);
         this.addEventListeners();
+        this.sendSocketNotification("SCAN_WIFI");
     },
 
     getDom: function() {
@@ -27,6 +28,7 @@ Module.register("MMM-WifiSetup", {
         showFormButton.addEventListener("click", function() {
             document.getElementById("wifi-form-container").style.display = "flex";
             this.style.display = "none";
+            this.sendSocketNotification("SCAN_WIFI");
         });
         wrapper.appendChild(showFormButton);
 
@@ -63,5 +65,14 @@ Module.register("MMM-WifiSetup", {
                 document.getElementById("show-form-button").style.display = "block";
             }
         });
+    },
+
+    socketNotificationRecieved: function(notification, payload) {
+        if (notification === "WIFI_SCAN_RESULT") {
+            var iframe = document.querySelector("iframe");
+            if (iframe) {
+                iframe.contentWindow.postMessage({ type: "wifiNetworks", data: payload }, "*");
+            }
+        }
     }
 });

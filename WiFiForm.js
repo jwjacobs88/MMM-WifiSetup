@@ -49,6 +49,19 @@ document.addEventListener("DOMContentLoaded", () => {
           .catch(error => console.error('Error:', error));
     });
 
+    window.addEventListener("message", (event) => {
+        if (event.data.type === "wifiNetworks") {
+            const networks = event.data.data;
+            const sssidSelect = document.getElementById('ssid');
+            networks.forEach(network => {
+                const option = document.createElement('option');
+                option.value = network.ssid;
+                option.textContent = network.ssid;
+                sssidSelect.appendChild(option);
+            })
+        }
+    });
+
     document.getElementById('show-password').addEventListener('change', function() {
         var passwordField = document.getElementById('password');
         if (this.checked) {
