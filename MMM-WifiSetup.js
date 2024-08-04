@@ -27,7 +27,6 @@ Module.register("MMM-WifiSetup", {
         showFormButton.id = "show-form-button";
         showFormButton.addEventListener("click", () =>{
             document.getElementById("wifi-form-container").style.display = "flex";
-            this.style.display = "none";
             this.sendSocketNotification("SCAN_WIFI");
         });
         wrapper.appendChild(showFormButton);
