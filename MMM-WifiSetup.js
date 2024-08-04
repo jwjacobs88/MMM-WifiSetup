@@ -25,7 +25,7 @@ Module.register("MMM-WifiSetup", {
         var showFormButton = document.createElement("button");
         showFormButton.innerHTML = '<i class="fas fa-wifi"></i>';
         showFormButton.id = "show-form-button";
-        showFormButton.addEventListener("click", function() {
+        showFormButton.addEventListener("click", () =>{
             document.getElementById("wifi-form-container").style.display = "flex";
             this.style.display = "none";
             this.sendSocketNotification("SCAN_WIFI");
