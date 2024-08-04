@@ -30,3 +30,8 @@ Here is an example for an entry in `config.js`
 ## Configuration options
 
 None configuration options
+
+
+# TODO
+
+- Add nmcli option in addition to current dbus/wpa_supplicant options

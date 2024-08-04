@@ -1,7 +1,7 @@
 const NodeHelper = require("node_helper");
 const bodyParser = require("body-parser");
 const fs = require('fs');
-const wifi = require('wpa_supplicant');
+const wpa_cli = require('wireless-tools/wpa_cli');
 
 module.exports = NodeHelper.create({
     start: function() {
@@ -53,14 +53,13 @@ module.exports = NodeHelper.create({
 
     scanWifiNetworks: function() {
         console.log("Scanning for networks.");
-        var wifi = wpa();
-
-        wifi.on('ready', function () {
-            wifi.scan()
+        wpa_cli.scan('wlan0', function(err, data){
+            wpa_cli.scan_results('wlan0', function(err, data) {
+               // returns the results of the BSS scan once it completes
+               console.dir(data);
+               this.sendSocketNotification("WIFI_SCAN_RESULT", data);
+            });
         });
-        var networks = wifi.networks;
-        console.log(networks);
-        this.sendSocketNotification("WIFI_SCAN_RESULT", networks);
     },
 
     socketNotificationReceived: function(notification, payload) {

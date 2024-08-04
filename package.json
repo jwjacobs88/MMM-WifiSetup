@@ -13,7 +13,7 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "simple-keyboard": "^3.7.99",
-    "wpa_supplicant": "^1.0.2"
+    "wireless-tools": "^0.19.0"
   },
   "devDependencies": {
     "webpack-cli": "^5.1.4"
