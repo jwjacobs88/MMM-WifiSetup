@@ -52,12 +52,14 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("message", (event) => {
         if (event.data.type === "wifiNetworks") {
             const networks = event.data.data;
-            const sssidSelect = document.getElementById('ssid');
+            const ssidSelect = document.getElementById('ssid');
             networks.forEach(network => {
-                const option = document.createElement('option');
-                option.value = network.ssid;
-                option.textContent = network.ssid;
-                sssidSelect.appendChild(option);
+                if (network.hasOwnProperty('ssid')) {
+                    const option = document.createElement('option');
+                    option.value = network.ssid;
+                    option.textContent = network.ssid;
+                    ssidSelect.appendChild(option);
+                }
             })
         }
     });
