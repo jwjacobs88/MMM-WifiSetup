@@ -51,7 +51,7 @@ module.exports = NodeHelper.create({
         require('child_process').exec('sudo reboot', console.log)  
     },
 
-    scanWifiNetworks: () => {
+    scanWifiNetworks: function() {
         console.log("Scanning for networks.");
         wpa_cli.scan('wlan0', (err, data) => {
             wpa_cli.scan_results('wlan0', (err, data) => {

@@ -11,7 +11,7 @@ Module.register("MMM-WifiSetup", {
         return [this.file("MMM-WifiSetup.css"), "font-awesome.css"];
     },
 
-    start: () => {
+    start: function() {
         Log.info("Starting module: " + this.name);
         this.addEventListeners();
         this.sendSocketNotification("SCAN_WIFI");
@@ -66,7 +66,7 @@ Module.register("MMM-WifiSetup", {
         });
     },
 
-    socketNotificationRecieved: (notification, payload) => {
+    socketNotificationRecieved: function(notification, payload) {
         Log.log(this.name + " received a socket notification: " + notification + " - Payload: " + payload);
         Log.dir(payload);
         if (notification === "WIFI_SCAN_RESULT") {
