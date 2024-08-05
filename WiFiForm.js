@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     window.addEventListener("message", (event) => {
+        console.dir(event);
         if (event.data.type === "wifiNetworks") {
             const networks = event.data.data;
             console.dir(networks);

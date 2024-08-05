@@ -68,10 +68,10 @@ Module.register("MMM-WifiSetup", {
 
     socketNotificationRecieved: function(notification, payload) {
         if (notification === "WIFI_SCAN_RESULT") {
+            console.log("Payload recieved")
+            console.dir(payload)
             var iframe = document.querySelector("iframe");
             if (iframe) {
-                console.log("Payload recieved")
-                console.dir(payload)
                 iframe.contentWindow.postMessage({ type: "wifiNetworks", data: payload }, "*");
             }
         }
