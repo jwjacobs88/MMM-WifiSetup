@@ -53,6 +53,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.data.type === "wifiNetworks") {
             const networks = event.data.data;
             const ssidSelect = document.getElementById('ssid');
+            // remove current options
+            while (ssidSelect.firstChild) {
+                ssidSelect.removeChild(ssidSelect.firstChild);
+            }
+            // add new options
             networks.forEach(network => {
                 if (network.hasOwnProperty('ssid')) {
                     const option = document.createElement('option');
