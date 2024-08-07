@@ -50,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     window.addEventListener("message", (event) => {
-        console.log("Message received in iframe:", event.data);
         if (event.data.type === "wifiNetworks") {
             const networks = event.data.data;
             const ssidSelect = document.getElementById('ssid');
