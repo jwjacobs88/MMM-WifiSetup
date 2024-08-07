@@ -24,7 +24,7 @@ module.exports = NodeHelper.create({
                     console.error("Error setting up Wi-Fi:", err);
                     res.status(500).json({ message: "Error setting up Wi-Fi." });
                 } else {
-                    res.json({ message: "Wi-Fi setup will be applied on next boot." });
+                    res.json({ message: `Connected to ${ssid} Wi-Fi network.` });
                 }
             });
         });
