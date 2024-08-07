@@ -66,7 +66,7 @@ Module.register("MMM-WifiSetup", {
         });
     },
 
-    socketNotificationRecieved: function(notification, payload) {
+    socketNotificationReceived: function(notification, payload) {
         Log.log(notification, payload);
         alert(notification);
         console.log(notification);
