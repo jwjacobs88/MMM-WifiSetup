@@ -24,7 +24,7 @@
             border-radius: 10px; /* Rounded corners */
             overflow: auto; /* Ensure form is scrollable */
         }
-        input, button {
+        input, button, select {
             margin: 10px 0;
             padding: 10px;
             font-size: 1em;
@@ -48,7 +48,7 @@
 <body>
     <form id="wifi-form">
         <label for="ssid">Wi-Fi SSID:</label>
-        <input type="text" id="ssid" name="ssid" required>
+        <select id="ssid" name="ssid" required></select>
         
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>

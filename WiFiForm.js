@@ -49,6 +49,26 @@ document.addEventListener("DOMContentLoaded", () => {
           .catch(error => console.error('Error:', error));
     });
 
+    window.addEventListener("message", (event) => {
+        if (event.data.type === "wifiNetworks") {
+            const networks = event.data.data;
+            const ssidSelect = document.getElementById('ssid');
+            // remove current options
+            while (ssidSelect.firstChild) {
+                ssidSelect.removeChild(ssidSelect.firstChild);
+            }
+            // add new options
+            networks.forEach(network => {
+                if (network.hasOwnProperty('ssid')) {
+                    const option = document.createElement('option');
+                    option.value = network.ssid;
+                    option.textContent = network.ssid;
+                    ssidSelect.appendChild(option);
+                }
+            })
+        }
+    });
+
     document.getElementById('show-password').addEventListener('change', function() {
         var passwordField = document.getElementById('password');
         if (this.checked) {

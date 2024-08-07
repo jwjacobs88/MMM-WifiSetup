@@ -14,6 +14,7 @@ Module.register("MMM-WifiSetup", {
     start: function() {
         Log.info("Starting module: " + this.name);
         this.addEventListeners();
+        this.sendSocketNotification("SCAN_WIFI");
     },
 
     getDom: function() {
@@ -24,9 +25,9 @@ Module.register("MMM-WifiSetup", {
         var showFormButton = document.createElement("button");
         showFormButton.innerHTML = '<i class="fas fa-wifi"></i>';
         showFormButton.id = "show-form-button";
-        showFormButton.addEventListener("click", function() {
+        showFormButton.addEventListener("click", () =>{
             document.getElementById("wifi-form-container").style.display = "flex";
-            this.style.display = "none";
+            this.sendSocketNotification("SCAN_WIFI");
         });
         wrapper.appendChild(showFormButton);
 
@@ -63,5 +64,16 @@ Module.register("MMM-WifiSetup", {
                 document.getElementById("show-form-button").style.display = "block";
             }
         });
+    },
+
+    socketNotificationReceived: function(notification, payload) {
+        switch(notification) {
+            case "WIFI_SCAN_RESULT":
+                var iframe = document.querySelector("iframe");
+                if (iframe) {
+                    iframe.contentWindow.postMessage({ type: "wifiNetworks", data: payload }, "*");
+                }
+                break;
+        }
     }
 });
