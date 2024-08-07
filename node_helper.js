@@ -2,7 +2,6 @@ const NodeHelper = require("node_helper");
 const bodyParser = require("body-parser");
 const fs = require('fs');
 const wpa_cli = require('wireless-tools/wpa_cli');
-const wpa_supplicant = require('wireless-tools/wpa_supplicant');
 
 module.exports = NodeHelper.create({
     start: function() {
@@ -47,21 +46,12 @@ module.exports = NodeHelper.create({
             if (err) return callback(err);
             callback(null);
         });
-	    console.log("Moving the file in place...")
-        require('child_process').exec('sudo mv /tmp/wpa_supplicant.conf /boot/wpa_supplicant.conf', console.log)  
+	    console.log("Moving the file in place...");
+        require('child_process').exec('sudo mv /tmp/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf', console.log);
+        // wireless-tools doesn't have a command for reconfigure
+        require('child_process').exec('sudo wpa_cli -i wlan0 reconfigure', console.log); 
 
-        var options = {
-            interface: 'wlan0',
-            ssid,
-            passphrase: password,
-            driver: 'wext',
-        };
-
-        wpa_supplicant.enable(options, function(err) {
-            console.error(err);
-        });
-        console.log("Connected to network");
-        //require('child_process').exec('sudo reboot', console.log)  
+        console.log('Updated wifi');
     },
 
     scanWifiNetworks: function() {
