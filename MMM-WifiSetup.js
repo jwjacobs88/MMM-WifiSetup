@@ -3,21 +3,21 @@ Module.register("MMM-WifiSetup", {
         // Default module configurations
     },
 
-    getScripts: () {
+    getScripts: function() {
         return [this.file("dist/WiFiForm.bundle.js")];
     },
 
-    getStyles: () {
+    getStyles: function() {
         return [this.file("MMM-WifiSetup.css"), "font-awesome.css"];
     },
 
-    start: () {
+    start: function() {
         Log.info("Starting module: " + this.name);
         this.addEventListeners();
         this.sendSocketNotification("SCAN_WIFI");
     },
 
-    getDom: () {
+    getDom: function() {
         var wrapper = document.createElement("div");
         wrapper.id = "wifi-setup-wrapper";
 
@@ -57,7 +57,7 @@ Module.register("MMM-WifiSetup", {
         return wrapper;
     },
 
-    addEventListeners: () {
+    addEventListeners: function() {
         window.addEventListener("message", (event) => {
             if (event.data === "closeForm") {
                 document.getElementById("wifi-form-container").style.display = "none";
@@ -66,16 +66,13 @@ Module.register("MMM-WifiSetup", {
         });
     },
 
-    socketNotificationRecieved: (notification, payload) {
-        alert("Got notification");
-        Log.log("Got notification");
-        switch(notification) {
-            case "WIFI_SCAN_RESULT":
-                var iframe = document.querySelector("iframe");
-                if (iframe) {
-                    iframe.contentWindow.postMessage({ type: "wifiNetworks", data: payload }, "*");
-                }
-                break;
+    socketNotificationRecieved: function(notification, payload) {
+        Log.log(this.name + " received a socket notification: " + notification + " - Payload: " + payload);
+        Log.dir(payload);
+        if (notification === "WIFI_SCAN_RESULT") {
+            var iframe = document.querySelector("iframe");
+            if (iframe) {
+                iframe.contentWindow.postMessage({ type: "wifiNetworks", data: payload }, "*");
             }
         }
     }
