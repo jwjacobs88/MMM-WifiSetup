@@ -67,13 +67,17 @@ Module.register("MMM-WifiSetup", {
     },
 
     socketNotificationRecieved: function(notification, payload) {
-        Log.log(this.name + " received a socket notification: " + notification + " - Payload: " + payload);
+        Log.log(notification, payload);
+        alert(notification);
+        console.log(notification);
         Log.dir(payload);
-        if (notification === "WIFI_SCAN_RESULT") {
-            var iframe = document.querySelector("iframe");
-            if (iframe) {
-                iframe.contentWindow.postMessage({ type: "wifiNetworks", data: payload }, "*");
-            }
+        switch(notification) {
+            case "WIFI_SCAN_RESULT":
+                var iframe = document.querySelector("iframe");
+                if (iframe) {
+                    iframe.contentWindow.postMessage({ type: "wifiNetworks", data: payload }, "*");
+                }
+                break;
         }
     }
 });

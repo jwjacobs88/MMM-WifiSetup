@@ -63,10 +63,10 @@ module.exports = NodeHelper.create({
     },
 
     socketNotificationReceived: function(notification, payload) {
-        if (notification === "START_WIFI_SETUP") {
-            // Handle socket notifications from the frontend if needed
-        } else if (notification === "SCAN_WIFI") {
-            this.scanWifiNetworks();
+        switch(notification) {
+            case "SCAN_WIFI":
+                this.scanWifiNetworks();
+                break;
         }
     }
 });
